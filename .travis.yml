@@ -19,15 +19,8 @@ matrix:
         - PATH=/c/Python38:/c/Python38/Scripts:$PATH
       before_install:
         - choco install python
-        # The command "pip install virtualenv" failed and exited with 127 during 
-        # - pip install virtualenv
-        # - virtualenv $HOME/venv
-        # - source $HOME/venv/Scripts/activate
         - python --version
-        # - pip install -r requirements.txt
       script:
-        # download it and place it in your PATH as skaffold.exe.
-        # https://storage.googleapis.com/skaffold/releases/latest/skaffold-windows-amd64.exe
         - choco install -y skaffold
         - skaffold version
       after_success:
@@ -69,36 +62,4 @@ matrix:
       after_success:
         - deactivate
 
-# https://skaffold.dev/docs/install/    
-    - name: "deploy skaffold on focal amd64"
-      dist: focal
-      arch: amd64
-      language: python
-      python: 3.7
-      before_install:
-        - pip3 install virtualenv
-        - virtualenv -p $(which python3) ~venvpy3
-        - source ~venvpy3/bin/activate
-        - pip install -r requirements.txt
-      script:
-        # - sudo make deploy-minikube-latest
-        - sudo make deploy-skaffold-latest
-      after_success:
-        - deactivate
 
-# https://skaffold.dev/docs/install/    
-    - name: "deploy skaffold on bionic amd64"
-      dist: bionic
-      arch: amd64
-      language: python
-      python: 3.7
-      before_install:
-        - pip3 install virtualenv
-        - virtualenv -p $(which python3) ~venvpy3
-        - source ~venvpy3/bin/activate
-        - pip install -r requirements.txt
-      script:
-        # - sudo make deploy-minikube-latest
-        - sudo make deploy-skaffold-latest
-      after_success:
-        - deactivate
