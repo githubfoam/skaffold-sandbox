@@ -194,6 +194,82 @@ matrix:
 #       after_success:
 #         - deactivate
 
+    - name: "build airflow image Extra Airflow Packages(combined) on bionic amd64"
+      os: linux
+      dist: bionic
+      arch: amd64
+      services:
+      - docker
+      language: python
+      python: 3.7
+      before_install:
+        - pip3 install virtualenv
+        - virtualenv -p $(which python3) ~venvpy3
+        - source ~venvpy3/bin/activate
+        - pip install -r requirements.txt
+      script:
+        - docker build --rm --build-arg AIRFLOW_DEPS="datadog,dask" --build-arg PYTHON_DEPS="flask_oauthlib>=0.9" -t . puckel/docker-airflow 
+        - docker image ls
+      after_success:
+        - deactivate
+
+    - name: "build airflow image python dependencies on bionic amd64"
+      os: linux
+      dist: bionic
+      arch: amd64
+      services:
+      - docker
+      language: python
+      python: 3.7
+      before_install:
+        - pip3 install virtualenv
+        - virtualenv -p $(which python3) ~venvpy3
+        - source ~venvpy3/bin/activate
+        - pip install -r requirements.txt
+      script:
+        - docker build --rm --build-arg PYTHON_DEPS="flask_oauthlib>=0.9" -t . puckel/docker-airflow  
+        - docker image ls
+      after_success:
+        - deactivate
+
+    - name: "build airflow image Extra Airflow Packages  on bionic amd64"
+      os: linux
+      dist: bionic
+      arch: amd64
+      services:
+      - docker
+      language: python
+      python: 3.7
+      before_install:
+        - pip3 install virtualenv
+        - virtualenv -p $(which python3) ~venvpy3
+        - source ~venvpy3/bin/activate
+        - pip install -r requirements.txt
+      script:
+        - docker build --rm --build-arg AIRFLOW_DEPS="datadog,dask" -t . puckel/docker-airflow 
+        - docker image ls
+      after_success:
+        - deactivate
+
+    - name: "build airflow image on bionic amd64"
+      os: linux
+      dist: bionic
+      arch: amd64
+      services:
+      - docker
+      language: python
+      python: 3.7
+      before_install:
+        - pip3 install virtualenv
+        - virtualenv -p $(which python3) ~venvpy3
+        - source ~venvpy3/bin/activate
+        - pip install -r requirements.txt
+      script:
+        - docker pull puckel/docker-airflow
+        - docker image ls
+      after_success:
+        - deactivate
+
     - name: "deploy airflow  on bionic amd64"
       os: linux
       dist: bionic
