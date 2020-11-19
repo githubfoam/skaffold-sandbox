@@ -10,120 +10,6 @@ matrix:
   fast_finish: true
   include:
 
-# https://skaffold.dev/docs/install/
-    # - name: "deploy skaffold Python 3.8 on Windows"
-    #   os: windows
-    #   language: shell
-    #   env:
-    #     - PATH=/c/Python38:/c/Python38/Scripts:$PATH
-    #   before_install:
-    #     - choco install python
-    #     # The command "pip install virtualenv" failed and exited with 127 during 
-    #     # - pip install virtualenv
-    #     # - virtualenv $HOME/venv
-    #     # - source $HOME/venv/Scripts/activate
-    #     - python --version
-    #     # - pip install -r requirements.txt
-    #   script:
-    #     # download it and place it in your PATH as skaffold.exe.
-    #     # https://storage.googleapis.com/skaffold/releases/latest/skaffold-windows-amd64.exe
-    #     # - $version = (Invoke-RestMethod https://api.github.com/repos/argoproj/argo-cd/releases/latest).tag_name
-    #     # - $url = "https://github.com/argoproj/argo-cd/releases/download/" + $version + "/argocd-windows-amd64.exe"
-    #     - $url = "https://storage.googleapis.com/skaffold/releases/latest/skaffold-windows-amd64.exe"
-    #     - $output = "skaffold-windows-amd64.exe"
-    #     - Invoke-WebRequest -Uri $url -OutFile $output        
-    #     - skaffold version
-    #   after_success:
-    #     - deactivate
-
-# https://chocolatey.org/
-# https://skaffold.dev/docs/install/
-    # - name: "deploy skaffold w chocolatey Python 3.8 on Windows"
-    #   os: windows
-    #   language: shell
-    #   env:
-    #     - PATH=/c/Python38:/c/Python38/Scripts:$PATH
-    #   before_install:
-    #     - choco install python
-    #     # The command "pip install virtualenv" failed and exited with 127 during 
-    #     # - pip install virtualenv
-    #     # - virtualenv $HOME/venv
-    #     # - source $HOME/venv/Scripts/activate
-    #     - python --version
-    #     # - pip install -r requirements.txt
-    #   script:
-    #     # download it and place it in your PATH as skaffold.exe.
-    #     # https://storage.googleapis.com/skaffold/releases/latest/skaffold-windows-amd64.exe
-    #     - choco install -y skaffold
-    #     - skaffold version
-    #   after_success:
-    #     - deactivate
-
-# https://skaffold.dev/docs/install/    
-    # - name: "deploy skaffold w homebrew on macOS 10.15.7 osx xcode12.2"
-    #   os: osx
-    #   osx_image:
-    #     - xcode12.2 #macOS 10.15.7
-    #   addons:
-    #     homebrew:
-    #       packages:
-    #       - skaffold
-    #       update: true
-    #   # language: java
-    #   before_install:
-    #     - pip3 install virtualenv
-    #     - virtualenv -p $(which python3) ~venvpy3
-    #     - source ~venvpy3/bin/activate
-    #     - python --version
-    #     - pip install -r requirements.txt
-    #   script:
-    #   - skaffold version
-    #   after_success:
-    #     - deactivate
-
-# https://www.macports.org/
-# https://skaffold.dev/docs/install/    
-    # - name: "deploy skaffold via MacPorts wo homebrew on macOS macOS 10.14.6 osx xcode11"
-    #   os: osx
-    #   osx_image:
-    #     - xcode11 #macOS 10.15.7
-    #   before_install:
-    #     - pip3 install virtualenv
-    #     - virtualenv -p $(which python3) ~venvpy3
-    #     - source ~venvpy3/bin/activate
-    #     - python --version
-    #     - pip install -r requirements.txt
-    #   script:
-    #   # By default port is installed the directory /opt/local/bin
-    #   - export PATH=$PATH:/opt/local/bin
-    #   - sudo port install skaffold
-    #   after_success:
-    #     - deactivate
-
-# https://skaffold.dev/docs/install/    
-    # - name: "deploy skaffold via script wo homebrew on macOS 10.15.7 osx xcode12.2"
-    #   os: osx
-    #   osx_image:
-    #     - xcode12.2 #macOS 10.15.7
-    #   addons:
-    #     homebrew:
-    #       packages:
-    #       - python
-    #       - curl
-    #       update: true
-    #   language: java
-    #   before_install:
-    #     - pip3 install virtualenv
-    #     - virtualenv -p $(which python3) ~venvpy3
-    #     - source ~venvpy3/bin/activate
-    #     - python --version
-    #     - pip install -r requirements.txt
-    #   script:
-    #   - curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-darwin-amd64 && \
-    #   - sudo install skaffold /usr/local/bin/
-    #   after_success:
-    #     - deactivate
-
 # https://skaffold.dev/docs/install/    
     # - name: "deploy skaffold via docker on focal amd64"
     #   dist: focal
@@ -160,23 +46,24 @@ matrix:
     #   after_success:
     #     - deactivate
 
+# TESTED NOT OK
 # https://skaffold.dev/docs/install/    
-    - name: "deploy skaffold on focal amd64"
-      dist: focal
-      arch: amd64
-      language: python
-      python: 3.7
-      before_install:
-        - pip3 install virtualenv
-        - virtualenv -p $(which python3) ~venvpy3
-        - source ~venvpy3/bin/activate
-        - pip install -r requirements.txt
-      script:
-        - sudo make deploy-minikube-latest
-        - sudo make deploy-skaffold-latest
-        - sudo make deploy-skaffold-app
-      after_success:
-        - deactivate
+    # - name: "deploy skaffold on focal amd64"
+    #   dist: focal
+    #   arch: amd64
+    #   language: python
+    #   python: 3.7
+    #   before_install:
+    #     - pip3 install virtualenv
+    #     - virtualenv -p $(which python3) ~venvpy3
+    #     - source ~venvpy3/bin/activate
+    #     - pip install -r requirements.txt
+    #   script:
+    #     - sudo make deploy-minikube-latest
+    #     - sudo make deploy-skaffold-latest
+    #     - sudo make deploy-skaffold-app
+    #   after_success:
+    #     - deactivate
 
 # https://minikube.sigs.k8s.io/docs/start/
 # https://kubernetes.io/docs/tasks/tools/install-kubectl/
