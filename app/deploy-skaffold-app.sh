@@ -9,7 +9,7 @@ set -o xtrace
 echo "=============================deploy skaffold app============================================================="
 
 #cleanup skaffold deployment
-rm -rf skaffol
+rm -rf skaffold
 
 # Clone the Skaffold repository
 git clone --depth 1 https://github.com/GoogleContainerTools/skaffold
