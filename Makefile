@@ -1,11 +1,11 @@
 IMAGE := alpine/fio
 APP:="app/deploy-openesb.sh"
 
+deploy-skaffold-app :
+	bash app/deploy-skaffold-app.sh
+
 deploy-skaffold-latest :
 	bash app/deploy-skaffold-latest.sh
-
-deploy-keycloak :
-	bash app/deploy-keycloak.sh
 
 deploy-k3d-latest:
 	bash platform/deploy-k3d-latest.sh
