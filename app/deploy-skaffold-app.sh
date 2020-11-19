@@ -17,8 +17,9 @@ git clone --depth 1 https://github.com/GoogleContainerTools/skaffold
 cd skaffold/examples/getting-started
 
 # Run skaffold dev to build and deploy your app
-# skaffold dev
-# timeout 50s skaffold dev
+# skaffold dev # continuously running
+
+# stops after 50secs
 skaffold dev & sleep 50s; kill $!
 
 # If you are deploying to a remote cluster, you must run skaffold dev --default-repo=<my_registry> where <my_registry> is an image registry that you have write-access to
