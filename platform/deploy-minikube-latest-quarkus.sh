@@ -74,3 +74,7 @@ minikube status
 kubectl cluster-info
 kubectl get pods --all-namespaces
 kubectl get pods -n default
+
+# Setup Nexus(Optional)
+# use nexus for caching maven artifacts so that builds are faster
+kubectl apply -f app/nexus.yaml
