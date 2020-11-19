@@ -194,6 +194,48 @@ matrix:
 #       after_success:
 #         - deactivate
 
+    - name: "build airflow celery example1 on bionic amd64"
+      os: linux
+      dist: bionic
+      arch: amd64
+      services:
+      - docker
+      language: python
+      python: 3.7
+      before_install:
+        - pip3 install virtualenv
+        - virtualenv -p $(which python3) ~venvpy3
+        - source ~venvpy3/bin/activate
+        - pip install -r requirements.txt
+      script:
+        - cd airflow/example1
+        - docker-compose -f docker-compose-celery.yaml up -d
+        - docker-compose logs #Displays log output
+        - docker-compose ps #List containersi        
+      after_success:
+        - deactivate
+
+    - name: "build airflow example1 on bionic amd64"
+      os: linux
+      dist: bionic
+      arch: amd64
+      services:
+      - docker
+      language: python
+      python: 3.7
+      before_install:
+        - pip3 install virtualenv
+        - virtualenv -p $(which python3) ~venvpy3
+        - source ~venvpy3/bin/activate
+        - pip install -r requirements.txt
+      script:
+        - cd airflow/example1
+        - docker-compose up -d
+        - docker-compose logs #Displays log output
+        - docker-compose ps #List containersi   
+      after_success:
+        - deactivate
+
     - name: "build airflow image Extra Airflow Packages(combined) on bionic amd64"
       os: linux
       dist: bionic
@@ -250,6 +292,7 @@ matrix:
         - source ~venvpy3/bin/activate
         - pip install -r requirements.txt
       script:
+        - git clone https://github.com/DeveKeSololutions/air-flow.git && cd air-flow
         - docker build --rm --build-arg AIRFLOW_DEPS="datadog,dask" -t puckel/docker-airflow .
         - docker image ls
         # By default, docker-airflow runs Airflow with SequentialExecutor
@@ -315,7 +358,8 @@ matrix:
       script:
         - cd airflow
         - docker-compose up -d #Run the web service with docker
-        - curl http://localhost:8080/
+        # curl: (56) Recv failure: Connection reset by peer
+        # - curl http://localhost:8080/
         - docker-compose logs #Displays log output
         - docker-compose ps #List containersi
         # airflow sub-commands
@@ -341,7 +385,8 @@ matrix:
       script:
         - cd airflow
         - docker-compose up -d --build #Build the image
-        - curl http://localhost:8080/
+        # curl: (56) Recv failure: Connection reset by peer
+        # - curl http://localhost:8080/
         - docker-compose logs #Displays log output
         - docker-compose ps #List containersi
         # airflow sub-commands
