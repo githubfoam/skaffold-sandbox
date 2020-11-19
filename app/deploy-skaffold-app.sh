@@ -6,8 +6,17 @@ set -o xtrace
 # set -eox pipefail #safety for script
 
 # https://skaffold.dev/docs/install/
-echo "=============================deploy skaffold============================================================="
+echo "=============================deploy skaffold app============================================================="
 
-curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && \
-install skaffold /usr/local/bin/
-skaffold
+# Clone the Skaffold repository
+git clone --depth 1 https://github.com/GoogleContainerTools/skaffold
+# Change to the examples/getting-started in skaffold directory
+cd skaffold/examples/getting-started
+
+# Run skaffold dev to build and deploy your app
+skaffold dev
+
+# If you are deploying to a remote cluster, you must run skaffold dev --default-repo=<my_registry> where <my_registry> is an image registry that you have write-access to
+# skaffold dev --default-repo=<my_registry>
+
+echo "=============================deploy skaffold app============================================================="

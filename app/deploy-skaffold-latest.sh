@@ -10,4 +10,5 @@ echo "=============================deploy skaffold==============================
 
 curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && \
 install skaffold /usr/local/bin/
-skaffold
+skaffold version
+echo "=============================deploy skaffold============================================================="
