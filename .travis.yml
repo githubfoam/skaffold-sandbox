@@ -208,6 +208,13 @@ matrix:
         - source ~venvpy3/bin/activate
         - pip install -r requirements.txt
       script:
-        - cd airflow && docker-compose up -d
+        - cd airflow && docker-compose up -d #Run the web service with docker
+        - cd airflow && docker-compose up -d --build #Build the image
+        - curl http://localhost:8080/
+        - docker-compose logs #Displays log output
+        - docker-compose ps #List containersi
+        # airflow sub-commands
+        - docker-compose run --rm webserver airflow list_dags #List dags
       after_success:
+        - docker-compose down #Stop containers
         - deactivate
