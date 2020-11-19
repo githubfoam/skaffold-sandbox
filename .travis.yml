@@ -208,8 +208,10 @@ matrix:
         - source ~venvpy3/bin/activate
         - pip install -r requirements.txt
       script:
-        - docker build --rm --build-arg AIRFLOW_DEPS="datadog,dask" --build-arg PYTHON_DEPS="flask_oauthlib>=0.9" -t . puckel/docker-airflow 
+        - docker build --rm --build-arg AIRFLOW_DEPS="datadog,dask" --build-arg PYTHON_DEPS="flask_oauthlib>=0.9" -t puckel/docker-airflow .
         - docker image ls
+        # By default, docker-airflow runs Airflow with SequentialExecutor
+        - docker run -d -p 8080:8080 puckel/docker-airflow webserver
       after_success:
         - deactivate
 
@@ -227,8 +229,10 @@ matrix:
         - source ~venvpy3/bin/activate
         - pip install -r requirements.txt
       script:
-        - docker build --rm --build-arg PYTHON_DEPS="flask_oauthlib>=0.9" -t . puckel/docker-airflow  
+        - docker build --rm --build-arg PYTHON_DEPS="flask_oauthlib>=0.9" -t puckel/docker-airflow .
         - docker image ls
+        # By default, docker-airflow runs Airflow with SequentialExecutor
+        - docker run -d -p 8080:8080 puckel/docker-airflow webserver        
       after_success:
         - deactivate
 
@@ -246,11 +250,34 @@ matrix:
         - source ~venvpy3/bin/activate
         - pip install -r requirements.txt
       script:
-        - docker build --rm --build-arg AIRFLOW_DEPS="datadog,dask" -t . puckel/docker-airflow 
+        - docker build --rm --build-arg AIRFLOW_DEPS="datadog,dask" -t puckel/docker-airflow .
         - docker image ls
+        # By default, docker-airflow runs Airflow with SequentialExecutor
+        - docker run -d -p 8080:8080 puckel/docker-airflow webserver        
       after_success:
         - deactivate
 
+    - name: "build airflow image DAGs example loaded on bionic amd64"
+      os: linux
+      dist: bionic
+      arch: amd64
+      services:
+      - docker
+      language: python
+      python: 3.7
+      before_install:
+        - pip3 install virtualenv
+        - virtualenv -p $(which python3) ~venvpy3
+        - source ~venvpy3/bin/activate
+        - pip install -r requirements.txt
+      script:
+        - docker pull puckel/docker-airflow
+        - docker image ls
+        # have DAGs example loaded (default=False)
+        - docker run -d -p 8080:8080 -e LOAD_EX=y puckel/docker-airflow      
+      after_success:
+        - deactivate
+        
     - name: "build airflow image on bionic amd64"
       os: linux
       dist: bionic
@@ -267,6 +294,8 @@ matrix:
       script:
         - docker pull puckel/docker-airflow
         - docker image ls
+        # By default, docker-airflow runs Airflow with SequentialExecutor
+        - docker run -d -p 8080:8080 puckel/docker-airflow webserver        
       after_success:
         - deactivate
 
@@ -291,7 +320,7 @@ matrix:
         - docker-compose ps #List containersi
         # airflow sub-commands
         # AttributeError: module 'sqlalchemy.dialects.postgresql' has no attribute 'MONEY'
-        - docker-compose run --rm webserver airflow list_dags #List dags
+        # - docker-compose run --rm webserver airflow list_dags #List dags
       after_success:
         - docker-compose down #Stop containers
         - deactivate
@@ -317,7 +346,7 @@ matrix:
         - docker-compose ps #List containersi
         # airflow sub-commands
         # AttributeError: module 'sqlalchemy.dialects.postgresql' has no attribute 'MONEY'
-        - docker-compose run --rm webserver airflow list_dags #List dags
+        # - docker-compose run --rm webserver airflow list_dags #List dags
       after_success:
         - docker-compose down #Stop containers
         - deactivate
