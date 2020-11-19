@@ -22,6 +22,9 @@ deploy-kind:
 deploy-minikube:
 	bash platform/deploy-minikube.sh
 
+deploy-minikube-latest-quarkus:
+	bash platform/deploy-minikube-latest-quarkus.sh
+
 deploy-minikube-latest:
 	bash platform/deploy-minikube-latest.sh
 
