@@ -193,5 +193,6 @@ matrix:
       script:
         - sudo make deploy-minikube-latest
         - sudo make deploy-skaffold-latest
+        - sudo make deploy-skaffold-app
       after_success:
         - deactivate
