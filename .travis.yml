@@ -194,7 +194,7 @@ matrix:
 #       after_success:
 #         - deactivate
 
-    - name: "deploy airflow on bionic amd64"
+    - name: "deploy airflow  on bionic amd64"
       os: linux
       dist: bionic
       arch: amd64
@@ -208,12 +208,39 @@ matrix:
         - source ~venvpy3/bin/activate
         - pip install -r requirements.txt
       script:
-        - cd airflow && docker-compose up -d #Run the web service with docker
-        - cd airflow && docker-compose up -d --build #Build the image
+        - cd airflow
+        - docker-compose up -d #Run the web service with docker
         - curl http://localhost:8080/
         - docker-compose logs #Displays log output
         - docker-compose ps #List containersi
         # airflow sub-commands
+        # AttributeError: module 'sqlalchemy.dialects.postgresql' has no attribute 'MONEY'
+        - docker-compose run --rm webserver airflow list_dags #List dags
+      after_success:
+        - docker-compose down #Stop containers
+        - deactivate
+
+    - name: "deploy airflow  build image on bionic amd64"
+      os: linux
+      dist: bionic
+      arch: amd64
+      services:
+      - docker
+      language: python
+      python: 3.7
+      before_install:
+        - pip3 install virtualenv
+        - virtualenv -p $(which python3) ~venvpy3
+        - source ~venvpy3/bin/activate
+        - pip install -r requirements.txt
+      script:
+        - cd airflow
+        - docker-compose up -d --build #Build the image
+        - curl http://localhost:8080/
+        - docker-compose logs #Displays log output
+        - docker-compose ps #List containersi
+        # airflow sub-commands
+        # AttributeError: module 'sqlalchemy.dialects.postgresql' has no attribute 'MONEY'
         - docker-compose run --rm webserver airflow list_dags #List dags
       after_success:
         - docker-compose down #Stop containers
