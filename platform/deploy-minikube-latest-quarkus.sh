@@ -70,8 +70,30 @@ kubectl cluster-info
 kubectl get pods --all-namespaces
 kubectl get pods -n default
 
-echo "============================deploy quarkus app=============================================================="
+echo "============================deploy nexus=============================================================="
 
 # Setup Nexus(Optional)
 # use nexus for caching maven artifacts so that builds are faster
 kubectl apply -f app/nexus.yaml
+
+echo "============================status check=============================================================="
+minikube status
+kubectl cluster-info
+kubectl get pods --all-namespaces
+kubectl get pods -n default
+# https://skaffold.dev/docs/install/
+echo "=============================deploy skaffold============================================================="
+
+curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && \
+install skaffold /usr/local/bin/
+skaffold version
+echo "============================deploy quarkus app=============================================================="
+git clone https://github.com/kameshsampath/skaffold-quarkus-helloworld.git
+cd skaffold-quarkus-helloworld
+
+skaffold dev --file skaffold-dev.yaml --port-forward
+
+# curl http://locahost:8080/hello
+
+# delete the application
+skaffold delete
