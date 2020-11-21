@@ -1,6 +1,12 @@
 IMAGE := alpine/fio
 APP:="app/deploy-openesb.sh"
 
+deploy-minikube-latest-quarkus-prod:
+	bash platform/deploy-minikube-latest-quarkus-prod.sh
+
+deploy-minikube-latest-quarkus-dev:
+	bash platform/deploy-minikube-latest-quarkus-dev.sh
+	
 deploy-skaffold-app :
 	bash app/deploy-skaffold-app.sh
 
@@ -21,9 +27,6 @@ deploy-kind:
 
 deploy-minikube:
 	bash platform/deploy-minikube.sh
-
-deploy-minikube-latest-quarkus:
-	bash platform/deploy-minikube-latest-quarkus.sh
 
 deploy-minikube-latest:
 	bash platform/deploy-minikube-latest.sh
