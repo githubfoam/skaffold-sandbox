@@ -34,7 +34,9 @@ minikube start --profile=minikube --vm-driver=none #the none driver, the kubectl
 minikube status #* There is no local cluster named "minikube"
 minikube update-context --profile=minikube
 `chown -R travis: /home/travis/.minikube/`
-eval "$(minikube docker-env --profile=minikube)" && export DOCKER_CLI='docker'
+
+#  "X Exiting due to ENV_DRIVER_CONFLICT: 'none' driver does not support 'minikube docker-env' command\n"
+# eval "$(minikube docker-env --profile=minikube)" && export DOCKER_CLI='docker'
 
 echo "=========================================================================================="
 minikube status
