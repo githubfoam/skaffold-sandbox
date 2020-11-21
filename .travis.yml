@@ -112,7 +112,7 @@ matrix:
         - source ~venvpy3/bin/activate
         - pip install -r requirements.txt
       script:
-        - sudo make deploy-minikube-latest-quarkus-prod
+        - sudo make deploy-minikube-latest-quarkus-prod-jvm
       after_success:
         - deactivate        
 
@@ -127,6 +127,6 @@ matrix:
         - source ~venvpy3/bin/activate
         - pip install -r requirements.txt
       script:
-        - sudo make deploy-minikube-latest-quarkus-prod
+        - sudo make deploy-minikube-latest-quarkus-prod-native
       after_success:
         - deactivate 
