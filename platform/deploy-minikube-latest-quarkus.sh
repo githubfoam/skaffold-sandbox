@@ -30,16 +30,11 @@ helm version
 mkdir -p $HOME/.kube $HOME/.minikube
 
 # minikube start --profile=minikube --vm-driver=none --kubernetes-version=v$KUBERNETES_VERSION #the none driver, the kubectl config and credentials generated are owned by root in the root user’s home directory
-# minikube start --profile=minikube --vm-driver=none #the none driver, the kubectl config and credentials generated are owned by root in the root user’s home directory
-
-minikube profile quarkus-demos
-minikube start --profile=quarkus-demos --vm-driver=none #the none driver, the kubectl config and credentials generated are owned by root in the root user’s home directory
-eval $(minikube docker-env)
-
-# minikube status #* There is no local cluster named "minikube"
-# minikube update-context --profile=minikube
-# `chown -R travis: /home/travis/.minikube/`
-# eval "$(minikube docker-env --profile=minikube)" && export DOCKER_CLI='docker'
+minikube start --profile=minikube --vm-driver=none #the none driver, the kubectl config and credentials generated are owned by root in the root user’s home directory
+minikube status #* There is no local cluster named "minikube"
+minikube update-context --profile=minikube
+`chown -R travis: /home/travis/.minikube/`
+eval "$(minikube docker-env --profile=minikube)" && export DOCKER_CLI='docker'
 
 echo "=========================================================================================="
 minikube status
@@ -74,6 +69,8 @@ minikube status
 kubectl cluster-info
 kubectl get pods --all-namespaces
 kubectl get pods -n default
+
+echo "============================deploy quarkus app=============================================================="
 
 # Setup Nexus(Optional)
 # use nexus for caching maven artifacts so that builds are faster
