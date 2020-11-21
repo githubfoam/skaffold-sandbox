@@ -101,7 +101,9 @@ git clone https://github.com/kameshsampath/skaffold-quarkus-helloworld.git
 cd skaffold-quarkus-helloworld
 
 skaffold dev --help
-skaffold dev -f skaffold-dev.yaml --port-forward #unknown flag: --file
+# skaffold dev -f skaffold-dev.yaml --port-forward #unknown flag: --file
+# stops after 120secs, stdout seen
+skaffold dev -f skaffold-dev.yaml --port-forward & sleep 120s; kill $!
 
 # curl http://locahost:8080/hello
 
