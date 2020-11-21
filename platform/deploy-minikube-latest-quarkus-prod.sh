@@ -110,7 +110,7 @@ cp src/main/docker/Dockerfile.jvm Dockerfile
 skaffold dev -f skaffold-dev.yaml --port-forward & sleep 120s; kill $!
 
 # curl http://locahost:8080/hello
-curl -I "http://locahost:8080/hello" 2>&1 | grep -w "200\|301" # see if a given website is up or down
+# curl -I "http://locahost:8080/hello" 2>&1 | grep -w "200\|301" # see if a given website is up or down
 wget --spider -S "http://locahost:8080/hello" 2>&1 | awk '/HTTP\// {print $2}' #see only the HTTP status code
 apt-get install -yyq lynx
 lynx -head -dump http://locahost:8080/hello #Check Whether a Website is up or down
