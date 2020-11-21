@@ -102,8 +102,8 @@ echo "============================deploy quarkus app============================
 git clone https://github.com/kameshsampath/skaffold-quarkus-helloworld.git
 cd skaffold-quarkus-helloworld
 
-# deploy Quarkus JVM image then run the following command before running skaffold
-cp src/main/docker/Dockerfile.jvm Dockerfile
+# deploy Quarkus Native image
+cp src/main/docker/Dockerfile.native Dockerfile
 
 
 # Quarkus Development mode
