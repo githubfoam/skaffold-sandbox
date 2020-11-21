@@ -48,7 +48,7 @@ echo "==========================================================================
 #       fi
 #       sleep 2
 # done
-echo echo "Waiting for kubernetes be ready ..."
+echo "Waiting for kubernetes to be ready ..."
 for i in {1..150}; do # Timeout after 5 minutes, 150x2=300 secs
       if kubectl get pods --namespace=kube-system  | grep Pending  ; then
         sleep 2
@@ -76,6 +76,15 @@ echo "============================deploy nexus==================================
 # use nexus for caching maven artifacts so that builds are faster
 kubectl apply -f app/nexus.yaml
 
+echo "Waiting for nexus to be ready ..."
+for i in {1..150}; do # Timeout after 5 minutes, 150x2=300 secs
+      if kubectl get pods --namespace=defaultm  | grep ContainerCreating ; then
+        sleep 4
+      else
+        break
+      fi
+done
+
 echo "============================status check=============================================================="
 minikube status
 kubectl cluster-info
@@ -91,7 +100,8 @@ echo "============================deploy quarkus app============================
 git clone https://github.com/kameshsampath/skaffold-quarkus-helloworld.git
 cd skaffold-quarkus-helloworld
 
-skaffold dev --file skaffold-dev.yaml --port-forward
+skaffold dev --help
+# skaffold dev --file skaffold-dev.yaml --port-forward #unknown flag: --file
 
 # curl http://locahost:8080/hello
 
