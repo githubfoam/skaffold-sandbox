@@ -78,7 +78,7 @@ kubectl apply -f app/nexus.yaml
 
 echo "Waiting for nexus to be ready ..."
 for i in {1..150}; do # Timeout after 5 minutes, 150x2=300 secs
-      if kubectl get pods --namespace=defaultm  | grep ContainerCreating ; then
+      if kubectl get pods --namespace=default  | grep ContainerCreating ; then
         sleep 4
       else
         break
@@ -101,7 +101,7 @@ git clone https://github.com/kameshsampath/skaffold-quarkus-helloworld.git
 cd skaffold-quarkus-helloworld
 
 skaffold dev --help
-# skaffold dev --file skaffold-dev.yaml --port-forward #unknown flag: --file
+skaffold dev -f skaffold-dev.yaml --port-forward #unknown flag: --file
 
 # curl http://locahost:8080/hello
 
