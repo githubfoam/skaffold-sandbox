@@ -1,6 +1,10 @@
 IMAGE := alpine/fio
 APP:="app/deploy-openesb.sh"
 
+deploy-quarkus-app:
+	bash app/deploy-quarkus-app.sh
+
+
 deploy-minikube-latest-quarkus-prod-native:
 	bash platform/deploy-minikube-latest-quarkus-prod-native.sh
 
