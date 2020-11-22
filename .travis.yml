@@ -138,16 +138,51 @@ matrix:
     - name: "deploy Quarkus Production mode - Quarkus Native image on bionic amd64"
       dist: bionic
       arch: amd64
-      language: python
-      python: 3.7
+      language: java
       before_install:
-        - pip3 install virtualenv
-        - virtualenv -p $(which python3) ~venvpy3
-        - source ~venvpy3/bin/activate
-        - pip install -r requirements.txt
         # Verify Maven is using the Java you expect
         - mvn --version
       script:
         - sudo make deploy-quarkus-app
+      after_success:
+        - deactivate         
+
+# https://quarkus.io/guides/maven-tooling
+    - name: "Quarkus - Building applications with Maven on bionic amd64"
+      dist: bionic
+      arch: amd64
+      language: java
+      # python: 3.7
+      before_install:
+        # Verify Maven is using the Java you expect
+        - mvn --version
+      script:
+        # Verify Maven is using the Java you expect
+        - |
+           mvn io.quarkus:quarkus-maven-plugin:1.9.2.Final:create \
+            -DprojectGroupId=my-groupId \
+            -DprojectArtifactId=my-artifactId \
+            -DprojectVersion=my-version \
+            -DclassName="org.my.group.MyResource" 
+      after_success:
+        - deactivate         
+
+# https://quarkus.io/guides/gradle-tooling        
+    - name: "Quarkus - Building applications with Maven on bionic amd64"
+      dist: bionic
+      arch: amd64
+      language: java
+      # python: 3.7
+      before_install:
+        # Verify Maven is using the Java you expect
+        - mvn --version
+      script:
+        # Verify Maven is using the Java you expect
+        - |
+           mvn io.quarkus:quarkus-maven-plugin:1.9.2.Final:create \
+            -DprojectGroupId=my-groupId \
+            -DprojectArtifactId=my-artifactId \
+            -DprojectVersion=my-version \
+            -DclassName="org.my.group.MyResource" 
       after_success:
         - deactivate         
